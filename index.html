@@ -1,0 +1,1767 @@
+﻿<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>YOU ARE MY WORLD ❤️</title>
+
+<style>
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+
+    font-family: Arial, sans-serif;
+    color: white;
+
+    background:
+        linear-gradient(
+            rgba(0, 0, 0, 0.68),
+            rgba(0, 0, 0, 0.88)
+        ),
+        url("background.jpg");
+
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+}
+
+
+/* =========================
+   КОНТЕЙНЕР
+========================= */
+
+.container {
+    width: 92%;
+    max-width: 650px;
+
+    margin: 0 auto;
+
+    padding-top: 45px;
+    padding-bottom: 120px;
+}
+
+
+/* =========================
+   ЗАГОЛОВОК
+========================= */
+
+.header {
+    text-align: center;
+    margin-bottom: 30px;
+
+    animation: fadeDown 0.7s ease;
+}
+
+.header h1 {
+    margin: 0;
+
+    font-size: 30px;
+    letter-spacing: 1px;
+}
+
+.header p {
+    margin-top: 8px;
+
+    color: #bdbdbd;
+}
+
+
+/* =========================
+   СПИСОК
+========================= */
+
+.playlist {
+    animation: fadeUp 0.7s ease;
+}
+
+.song-item {
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+
+    width: 100%;
+
+    padding: 10px;
+    margin-bottom: 8px;
+
+    border-radius: 14px;
+
+    background: rgba(30, 30, 30, 0.65);
+
+    cursor: pointer;
+
+    transition:
+        transform 0.2s,
+        background 0.2s;
+}
+
+.song-item:hover {
+    transform: translateX(5px);
+
+    background: rgba(70, 70, 70, 0.75);
+}
+
+.song-number {
+    width: 25px;
+
+    color: #999;
+
+    text-align: center;
+}
+
+.song-cover {
+    width: 55px;
+    height: 55px;
+
+    object-fit: cover;
+
+    border-radius: 10px;
+}
+
+.song-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.song-name {
+    font-size: 16px;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.song-artist {
+    margin-top: 5px;
+
+    color: #999;
+
+    font-size: 13px;
+}
+
+.song-arrow {
+    color: #aaa;
+    font-size: 22px;
+}
+
+
+/* =========================
+   ПЛЕЕР
+========================= */
+
+.player-screen {
+    display: none;
+
+    animation: playerAppear 0.5s ease;
+}
+
+.back-button {
+    display: inline-block;
+
+    margin-bottom: 25px;
+
+    color: white;
+
+    font-size: 16px;
+
+    cursor: pointer;
+
+    opacity: 0.85;
+}
+
+.back-button:hover {
+    opacity: 1;
+}
+
+
+/* =========================
+   КАРТОЧКА
+========================= */
+
+.player-card {
+    width: 100%;
+
+    padding: 25px;
+
+    border-radius: 25px;
+
+    background: rgba(15, 15, 15, 0.78);
+
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.6);
+
+    text-align: center;
+}
+
+
+/* =========================
+   ОБЛОЖКА
+========================= */
+
+.cover-container {
+    position: relative;
+
+    width: min(330px, 80vw);
+    height: min(330px, 80vw);
+
+    margin: 30px auto;
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+}
+
+.cover-container::before {
+    content: "";
+
+    position: absolute;
+
+    inset: -10px;
+
+    border-radius: 50%;
+
+    border: 2px solid rgba(255, 255, 255, 0.15);
+
+    box-shadow:
+        0 0 25px rgba(255, 255, 255, 0.18),
+        0 0 60px rgba(255, 255, 255, 0.06);
+
+    animation: ringPulse 2s ease-in-out infinite;
+}
+
+.player-cover {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    border-radius: 50%;
+
+    box-shadow:
+        0 10px 40px rgba(0, 0, 0, 0.7);
+}
+
+
+/* =========================
+   ВРАЩЕНИЕ
+========================= */
+
+.player-cover.playing {
+    animation:
+        rotateCover 12s linear infinite;
+}
+
+
+/* =========================
+   ТЕКСТ
+========================= */
+
+.player-title {
+    margin-top: 15px;
+
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.player-artist {
+    margin-top: 7px;
+
+    color: #aaa;
+
+    font-size: 15px;
+}
+
+
+/* =========================
+   ПРОГРЕСС
+========================= */
+
+.progress-container {
+    margin-top: 28px;
+}
+
+.progress {
+    width: 100%;
+
+    cursor: pointer;
+}
+
+.time-row {
+    display: flex;
+
+    justify-content: space-between;
+
+    margin-top: 6px;
+
+    color: #999;
+
+    font-size: 12px;
+}
+
+
+/* =========================
+   КНОПКИ
+========================= */
+
+.controls {
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    gap: 25px;
+
+    margin-top: 25px;
+}
+
+.control-button {
+    border: none;
+
+    background: transparent;
+
+    color: white;
+
+    font-size: 25px;
+
+    cursor: pointer;
+}
+
+.play-button {
+    width: 65px;
+    height: 65px;
+
+    border-radius: 50%;
+
+    border: none;
+
+    background: white;
+
+    color: black;
+
+    font-size: 25px;
+
+    cursor: pointer;
+
+    transition: transform 0.2s;
+}
+
+.play-button:hover {
+    transform: scale(1.08);
+}
+
+
+/* =========================
+   ГРОМКОСТЬ
+========================= */
+
+.volume {
+    margin-top: 22px;
+
+    width: 130px;
+}
+
+
+/* =========================
+   ВИЗУАЛИЗАТОР
+========================= */
+
+.visualizer {
+    width: 100%;
+    height: 70px;
+
+    margin-top: 20px;
+
+    display: flex;
+
+    align-items: flex-end;
+    justify-content: center;
+
+    gap: 5px;
+
+    overflow: hidden;
+}
+
+.bar {
+    width: 7px;
+    height: 8px;
+
+    border-radius: 10px;
+
+    background: rgba(255, 255, 255, 0.9);
+
+    box-shadow:
+        0 0 12px rgba(255, 255, 255, 0.25);
+}
+
+
+/* Движение только когда играет музыка */
+
+.visualizer.playing .bar {
+    animation: musicBars 0.65s ease-in-out infinite alternate;
+}
+
+.visualizer.playing .bar:nth-child(1) {
+    animation-delay: -0.1s;
+}
+
+.visualizer.playing .bar:nth-child(2) {
+    animation-delay: -0.4s;
+}
+
+.visualizer.playing .bar:nth-child(3) {
+    animation-delay: -0.2s;
+}
+
+.visualizer.playing .bar:nth-child(4) {
+    animation-delay: -0.6s;
+}
+
+.visualizer.playing .bar:nth-child(5) {
+    animation-delay: -0.3s;
+}
+
+.visualizer.playing .bar:nth-child(6) {
+    animation-delay: -0.5s;
+}
+
+.visualizer.playing .bar:nth-child(7) {
+    animation-delay: -0.15s;
+}
+
+.visualizer.playing .bar:nth-child(8) {
+    animation-delay: -0.45s;
+}
+
+.visualizer.playing .bar:nth-child(9) {
+    animation-delay: -0.25s;
+}
+
+.visualizer.playing .bar:nth-child(10) {
+    animation-delay: -0.55s;
+}
+
+.visualizer.playing .bar:nth-child(11) {
+    animation-delay: -0.35s;
+}
+
+.visualizer.playing .bar:nth-child(12) {
+    animation-delay: -0.65s;
+}
+
+.visualizer.playing .bar:nth-child(13) {
+    animation-delay: -0.2s;
+}
+
+.visualizer.playing .bar:nth-child(14) {
+    animation-delay: -0.5s;
+}
+
+.visualizer.playing .bar:nth-child(15) {
+    animation-delay: -0.3s;
+}
+
+.visualizer.playing .bar:nth-child(16) {
+    animation-delay: -0.6s;
+}
+
+@keyframes musicBars {
+
+    0% {
+        height: 7px;
+        opacity: 0.4;
+    }
+
+    25% {
+        height: 20px;
+        opacity: 0.65;
+    }
+
+    50% {
+        height: 42px;
+        opacity: 0.85;
+    }
+
+    75% {
+        height: 25px;
+        opacity: 0.7;
+    }
+
+    100% {
+        height: 62px;
+        opacity: 1;
+    }
+
+}
+
+
+/* =========================
+   МИНИ-ПЛЕЕР
+========================= */
+
+.mini-player {
+    display: none;
+
+    position: fixed;
+
+    left: 50%;
+    bottom: 15px;
+
+    transform: translateX(-50%);
+
+    width: 92%;
+    max-width: 620px;
+
+    min-height: 70px;
+
+    padding: 10px 13px;
+
+    border-radius: 18px;
+
+    background: rgba(20, 20, 20, 0.94);
+
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+
+    box-shadow:
+        0 10px 40px rgba(0, 0, 0, 0.65);
+
+    z-index: 1000;
+
+    align-items: center;
+
+    gap: 12px;
+}
+
+
+/* ЛЕВАЯ ЧАСТЬ */
+
+.mini-left {
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    flex: 1;
+
+    min-width: 0;
+
+    cursor: pointer;
+}
+
+.mini-cover {
+    width: 48px;
+    height: 48px;
+
+    flex-shrink: 0;
+
+    border-radius: 9px;
+
+    object-fit: cover;
+}
+
+.mini-info {
+    min-width: 0;
+}
+
+.mini-title {
+    font-size: 14px;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+}
+
+.mini-artist {
+    color: #999;
+
+    font-size: 12px;
+
+    margin-top: 3px;
+}
+
+
+/* =========================
+   КНОПКИ МИНИ-ПЛЕЕРА
+========================= */
+
+.mini-controls {
+    display: flex;
+
+    align-items: center;
+
+    gap: 4px;
+
+    flex-shrink: 0;
+}
+
+.mini-control {
+    width: 32px;
+    height: 32px;
+
+    border: none;
+
+    background: transparent;
+
+    color: white;
+
+    cursor: pointer;
+
+    font-size: 16px;
+
+    border-radius: 50%;
+
+    transition:
+        background 0.2s,
+        transform 0.15s;
+}
+
+.mini-control:hover {
+    background: rgba(255,255,255,0.12);
+
+    transform: scale(1.08);
+}
+
+.mini-play {
+    width: 40px;
+    height: 40px;
+
+    border-radius: 50%;
+
+    border: none;
+
+    background: white;
+
+    color: black;
+
+    cursor: pointer;
+
+    font-size: 16px;
+
+    transition:
+        transform 0.2s;
+}
+
+.mini-play:hover {
+    transform: scale(1.08);
+}
+
+
+/* =========================
+   НИЖНЯЯ ПОЛОСКА ПРОГРЕССА
+========================= */
+
+.mini-progress {
+    position: absolute;
+
+    left: 0;
+    bottom: 0;
+
+    width: 100%;
+    height: 3px;
+
+    border-radius: 0 0 18px 18px;
+
+    background: rgba(255,255,255,0.12);
+
+    overflow: hidden;
+
+    pointer-events: none;
+}
+
+.mini-progress-bar {
+    width: 0%;
+
+    height: 100%;
+
+    background: rgba(255,255,255,0.9);
+
+    pointer-events: none;
+
+    transition: width 0.15s linear;
+}
+
+
+/* =========================
+   АНИМАЦИИ
+========================= */
+
+@keyframes rotateCover {
+
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+
+}
+
+@keyframes ringPulse {
+
+    0% {
+        transform: scale(1);
+        opacity: 0.55;
+    }
+
+    50% {
+        transform: scale(1.025);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 0.55;
+    }
+
+}
+
+@keyframes fadeDown {
+
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+}
+
+@keyframes fadeUp {
+
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+}
+
+@keyframes playerAppear {
+
+    from {
+        opacity: 0;
+        transform: translateY(40px) scale(0.96);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+
+}
+
+
+/* =========================
+   ТЕЛЕФОН
+========================= */
+
+@media (max-width: 500px) {
+
+    .container {
+        padding-top: 30px;
+    }
+
+    .header h1 {
+        font-size: 25px;
+    }
+
+    .player-card {
+        padding: 18px;
+    }
+
+    .cover-container {
+        width: 75vw;
+        height: 75vw;
+    }
+
+    .controls {
+        gap: 18px;
+    }
+
+    .bar {
+        width: 5px;
+    }
+
+    .mini-player {
+        width: 94%;
+
+        padding-left: 10px;
+        padding-right: 8px;
+
+        gap: 6px;
+    }
+
+    .mini-left {
+        gap: 8px;
+    }
+
+    .mini-cover {
+        width: 44px;
+        height: 44px;
+    }
+
+    .mini-controls {
+        gap: 1px;
+    }
+
+    .mini-control {
+        width: 29px;
+        height: 32px;
+
+        font-size: 14px;
+    }
+
+    .mini-play {
+        width: 38px;
+        height: 38px;
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+    <!-- =====================
+         СПИСОК
+    ====================== -->
+
+    <div id="playlistScreen">
+
+        <div class="header">
+
+            <h1>
+                YOU ARE MY WORLD ❤️
+            </h1>
+
+            <p>
+                My favorite songs
+            </p>
+
+        </div>
+
+
+        <div
+            class="playlist"
+            id="playlist">
+        </div>
+
+    </div>
+
+
+
+    <!-- =====================
+         ПЛЕЕР
+    ====================== -->
+
+    <div
+        class="player-screen"
+        id="playerScreen">
+
+
+        <div
+            class="back-button"
+            onclick="showPlaylist()">
+
+            ← Назад
+
+        </div>
+
+
+        <div class="player-card">
+
+
+            <!-- ОБЛОЖКА -->
+
+            <div class="cover-container">
+
+                <img
+                    id="playerCover"
+                    class="player-cover"
+                    src="poater1.jpg"
+                    alt="Обложка">
+
+            </div>
+
+
+            <!-- НАЗВАНИЕ -->
+
+            <div
+                id="playerTitle"
+                class="player-title">
+
+                Yesterday
+
+            </div>
+
+
+            <div
+                id="playerArtist"
+                class="player-artist">
+
+                My World
+
+            </div>
+
+
+            <!-- ПРОГРЕСС -->
+
+            <div class="progress-container">
+
+                <input
+                    id="progress"
+                    class="progress"
+                    type="range"
+                    min="0"
+                    max="100"
+                    value="0">
+
+                <div class="time-row">
+
+                    <span id="currentTime">
+                        0:00
+                    </span>
+
+                    <span id="duration">
+                        0:00
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- КНОПКИ -->
+
+            <div class="controls">
+
+                <button
+                    class="control-button"
+                    onclick="previousSong()">
+
+                    ⏮
+
+                </button>
+
+
+                <button
+                    id="playButton"
+                    class="play-button"
+                    onclick="togglePlay()">
+
+                    ▶
+
+                </button>
+
+
+                <button
+                    class="control-button"
+                    onclick="nextSong()">
+
+                    ⏭
+
+                </button>
+
+            </div>
+
+
+            <!-- ГРОМКОСТЬ -->
+
+            <input
+                id="volume"
+                class="volume"
+                type="range"
+                min="0"
+                max="1"
+                step="0.01"
+                value="1">
+
+
+            <!-- =====================
+                 ВИЗУАЛИЗАТОР
+            ====================== -->
+
+            <div
+                id="visualizer"
+                class="visualizer">
+
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================
+     МИНИ-ПЛЕЕР
+========================= -->
+
+<div
+    id="miniPlayer"
+    class="mini-player">
+
+
+    <div
+        class="mini-left"
+        onclick="openPlayer(currentSong)">
+
+
+        <img
+            id="miniCover"
+            class="mini-cover"
+            src="poater1.jpg"
+            alt="Обложка">
+
+
+        <div class="mini-info">
+
+            <div
+                id="miniTitle"
+                class="mini-title">
+
+                Yesterday
+
+            </div>
+
+            <div
+                id="miniArtist"
+                class="mini-artist">
+
+                My World
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- =====================
+         КНОПКИ
+    ====================== -->
+
+    <div class="mini-controls">
+
+
+        <button
+            id="miniPrev"
+            class="mini-control"
+            onclick="previousSong()">
+
+            ⏮
+
+        </button>
+
+
+        <button
+            id="miniPlay"
+            class="mini-play"
+            onclick="togglePlay()">
+
+            ▶
+
+        </button>
+
+
+        <button
+            id="miniNext"
+            class="mini-control"
+            onclick="nextSong()">
+
+            ⏭
+
+        </button>
+
+
+    </div>
+
+
+    <!-- =====================
+         ПРОГРЕСС
+    ====================== -->
+
+    <div
+        id="miniProgress"
+        class="mini-progress">
+
+        <div
+            id="miniProgressBar"
+            class="mini-progress-bar">
+        </div>
+
+    </div>
+
+
+</div>
+
+
+
+<!-- =========================
+     АУДИО
+========================= -->
+
+<audio id="audio"></audio>
+
+
+
+<!-- =========================
+     JAVASCRIPT
+========================= -->
+
+<script>
+
+
+/* =================================
+   ПЕСНИ
+================================= */
+
+const songs = [
+
+    {
+        name: "Yesterday",
+        artist: "My World",
+        file: "song1.mp3",
+        cover: "poater1.jpg"
+    },
+
+    {
+        name: "Only You",
+        artist: "My World",
+        file: "song2.mp3",
+        cover: "poater2.jpg"
+    },
+
+    {
+        name: "Until Forever",
+        artist: "My World",
+        file: "song3.mp3",
+        cover: "poater3.jpg"
+    },
+
+    {
+        name: "Always",
+        artist: "My World",
+        file: "song4.mp3",
+        cover: "poater4.jpg"
+    },
+
+    {
+        name: "Remember",
+        artist: "My World",
+        file: "song5.mp3",
+        cover: "poater5.jpg"
+    },
+
+    {
+        name: "Everything",
+        artist: "My World",
+        file: "song6.mp3",
+        cover: "poater6.jpg"
+    },
+
+    {
+        name: "My Love",
+        artist: "My World",
+        file: "song7.mp3",
+        cover: "poater7.jpg"
+    },
+
+    {
+        name: "You",
+        artist: "My World",
+        file: "song8.mp3",
+        cover: "poater8.jpg"
+    },
+
+    {
+        name: "With You",
+        artist: "My World",
+        file: "song9.mp3",
+        cover: "poater9.jpg"
+    },
+
+    {
+        name: "One Heart",
+        artist: "My World",
+        file: "song10.mp3",
+        cover: "poater10.jpg"
+    },
+
+    {
+        name: "Romance",
+        artist: "My World",
+        file: "song11.mp3",
+        cover: "poater11.jpg"
+    },
+
+    {
+        name: "Love",
+        artist: "My World",
+        file: "song12.mp3",
+        cover: "poater12.jpg"
+    },
+
+    {
+        name: "Dream",
+        artist: "My World",
+        file: "song13.mp3",
+        cover: "poater13.jpg"
+    }
+
+];
+
+
+/* =================================
+   ЭЛЕМЕНТЫ
+================================= */
+
+const audio =
+    document.getElementById("audio");
+
+const playlist =
+    document.getElementById("playlist");
+
+const playlistScreen =
+    document.getElementById("playlistScreen");
+
+const playerScreen =
+    document.getElementById("playerScreen");
+
+const playerCover =
+    document.getElementById("playerCover");
+
+const playerTitle =
+    document.getElementById("playerTitle");
+
+const playerArtist =
+    document.getElementById("playerArtist");
+
+const progress =
+    document.getElementById("progress");
+
+const currentTime =
+    document.getElementById("currentTime");
+
+const duration =
+    document.getElementById("duration");
+
+const playButton =
+    document.getElementById("playButton");
+
+const volume =
+    document.getElementById("volume");
+
+const miniPlayer =
+    document.getElementById("miniPlayer");
+
+const miniCover =
+    document.getElementById("miniCover");
+
+const miniTitle =
+    document.getElementById("miniTitle");
+
+const miniArtist =
+    document.getElementById("miniArtist");
+
+const miniPlay =
+    document.getElementById("miniPlay");
+
+const miniProgressBar =
+    document.getElementById("miniProgressBar");
+
+const visualizer =
+    document.getElementById("visualizer");
+
+
+/* =================================
+   ТЕКУЩАЯ ПЕСНЯ
+================================= */
+
+let currentSong = 0;
+
+
+/* =================================
+   СОЗДАЁМ СПИСОК
+================================= */
+
+songs.forEach((song, index) => {
+
+    const item =
+        document.createElement("div");
+
+    item.className =
+        "song-item";
+
+    item.innerHTML = `
+
+        <div class="song-number">
+            ${index + 1}
+        </div>
+
+        <img
+            class="song-cover"
+            src="${song.cover}"
+            alt="Обложка">
+
+        <div class="song-info">
+
+            <div class="song-name">
+                ${song.name}
+            </div>
+
+            <div class="song-artist">
+                ${song.artist}
+            </div>
+
+        </div>
+
+        <div class="song-arrow">
+            ›
+        </div>
+
+    `;
+
+    item.onclick = () => {
+
+        openPlayer(index);
+
+    };
+
+    playlist.appendChild(item);
+
+});
+
+
+/* =================================
+   ОТКРЫТЬ ПЛЕЕР
+================================= */
+
+function openPlayer(index) {
+
+    currentSong = index;
+
+    const song =
+        songs[currentSong];
+
+    audio.pause();
+
+    audio.src =
+        song.file;
+
+    playerCover.src =
+        song.cover;
+
+    playerTitle.textContent =
+        song.name;
+
+    playerArtist.textContent =
+        song.artist;
+
+    miniCover.src =
+        song.cover;
+
+    miniTitle.textContent =
+        song.name;
+
+    miniArtist.textContent =
+        song.artist;
+
+    playlistScreen.style.display =
+        "none";
+
+    playerScreen.style.display =
+        "block";
+
+    miniPlayer.style.display =
+        "none";
+
+    audio.volume =
+        volume.value;
+
+    audio.load();
+
+    miniProgressBar.style.width =
+        "0%";
+
+    audio.play().catch(error => {
+
+        console.log(
+            "Ошибка запуска:",
+            error
+        );
+
+    });
+
+}
+
+
+/* =================================
+   НАЗАД
+================================= */
+
+function showPlaylist() {
+
+    playerScreen.style.display =
+        "none";
+
+    playlistScreen.style.display =
+        "block";
+
+    miniPlayer.style.display =
+        "flex";
+
+}
+
+
+/* =================================
+   PLAY / PAUSE
+================================= */
+
+function togglePlay() {
+
+    if (audio.paused) {
+
+        audio.play().catch(error => {
+
+            console.log(
+                "Ошибка:",
+                error
+            );
+
+        });
+
+    } else {
+
+        audio.pause();
+
+    }
+
+}
+
+
+/* =================================
+   PLAY
+================================= */
+
+audio.addEventListener(
+    "play",
+    () => {
+
+        playButton.textContent =
+            "❚❚";
+
+        miniPlay.textContent =
+            "❚❚";
+
+        playerCover.classList.add(
+            "playing"
+        );
+
+        visualizer.classList.add(
+            "playing"
+        );
+
+    }
+);
+
+
+/* =================================
+   PAUSE
+================================= */
+
+audio.addEventListener(
+    "pause",
+    () => {
+
+        playButton.textContent =
+            "▶";
+
+        miniPlay.textContent =
+            "▶";
+
+        playerCover.classList.remove(
+            "playing"
+        );
+
+        visualizer.classList.remove(
+            "playing"
+        );
+
+    }
+);
+
+
+/* =================================
+   ПРОГРЕСС
+================================= */
+
+audio.addEventListener(
+    "timeupdate",
+    () => {
+
+        if (!audio.duration) return;
+
+        const percent =
+            (
+                audio.currentTime /
+                audio.duration
+            ) * 100;
+
+        progress.value =
+            percent;
+
+        currentTime.textContent =
+            formatTime(
+                audio.currentTime
+            );
+
+
+        /* =========================
+           ПРОГРЕСС МИНИ-ПЛЕЕРА
+        ========================= */
+
+        miniProgressBar.style.width =
+            percent + "%";
+
+    }
+);
+
+
+/* =================================
+   ДЛИТЕЛЬНОСТЬ
+================================= */
+
+audio.addEventListener(
+    "loadedmetadata",
+    () => {
+
+        duration.textContent =
+            formatTime(
+                audio.duration
+            );
+
+    }
+);
+
+
+/* =================================
+   ПЕРЕМЕЩЕНИЕ ПО ПЕСНЕ
+================================= */
+
+progress.addEventListener(
+    "input",
+    () => {
+
+        if (!audio.duration) return;
+
+        audio.currentTime =
+            (
+                progress.value / 100
+            ) * audio.duration;
+
+    }
+);
+
+
+/* =================================
+   ГРОМКОСТЬ
+================================= */
+
+volume.addEventListener(
+    "input",
+    () => {
+
+        audio.volume =
+            volume.value;
+
+    }
+);
+
+
+/* =================================
+   ВРЕМЯ
+================================= */
+
+function formatTime(seconds) {
+
+    if (
+        !seconds ||
+        isNaN(seconds)
+    ) {
+
+        return "0:00";
+
+    }
+
+    const minutes =
+        Math.floor(
+            seconds / 60
+        );
+
+    const secs =
+        Math.floor(
+            seconds % 60
+        );
+
+    return (
+        minutes +
+        ":" +
+        String(secs).padStart(
+            2,
+            "0"
+        )
+    );
+
+}
+
+
+/* =================================
+   СЛЕДУЮЩАЯ ПЕСНЯ
+================================= */
+
+function nextSong() {
+
+    currentSong++;
+
+    if (
+        currentSong >= songs.length
+    ) {
+
+        currentSong = 0;
+
+    }
+
+    openPlayer(currentSong);
+
+}
+
+
+/* =================================
+   ПРЕДЫДУЩАЯ ПЕСНЯ
+================================= */
+
+function previousSong() {
+
+    currentSong--;
+
+    if (
+        currentSong < 0
+    ) {
+
+        currentSong =
+            songs.length - 1;
+
+    }
+
+    openPlayer(currentSong);
+
+}
+
+
+/* =================================
+   ПЕСНЯ ЗАКОНЧИЛАСЬ
+================================= */
+
+audio.addEventListener(
+    "ended",
+    () => {
+
+        nextSong();
+
+    }
+);
+
+
+/* =================================
+   МИНИ-ПЛЕЕР
+================================= */
+
+audio.addEventListener(
+    "play",
+    () => {
+
+        if (
+            playlistScreen.style.display
+            !== "none"
+        ) {
+
+            miniPlayer.style.display =
+                "flex";
+
+        }
+
+    }
+);
+
+
+audio.addEventListener(
+    "pause",
+    () => {
+
+        if (
+            playlistScreen.style.display
+            !== "none"
+        ) {
+
+            miniPlayer.style.display =
+                "flex";
+
+        }
+
+    }
+);
+
+
+</script>
+
+</body>
+</html>
